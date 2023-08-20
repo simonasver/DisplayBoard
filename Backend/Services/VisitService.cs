@@ -96,7 +96,7 @@ namespace Backend.Services
                 DurationInMinutes = VisitDurationInMinutes,
                 Owner = specialist,
                 Status = VisitStatus.NOT_STARTED,
-                StartDate = lastSpecialistVisit == null ? DateTime.Now : lastSpecialistVisit.StartDate.AddMinutes(lastSpecialistVisit.DurationInMinutes + 1)
+                StartDate = lastSpecialistVisit == null ? DateTime.Now : lastSpecialistVisit.StartDate.AddMinutes(lastSpecialistVisit.DurationInMinutes + 1) < DateTime.Now ? DateTime.Now : lastSpecialistVisit.StartDate.AddMinutes(lastSpecialistVisit.DurationInMinutes + 1)
             };
 
             var createdVisit = await _visitRepository.CreateAsync(visit);

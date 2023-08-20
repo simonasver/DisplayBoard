@@ -17,7 +17,7 @@ function App() {
       <Header />
       <Content>
         <Routes>
-          <Route path="/" element={<></>} />
+          <Route path="/" element={<VisitReservation />} />
 
           <Route path="/login" element={<LoginForm />} />
           <Route path="/logout" element={<Logout />} />
