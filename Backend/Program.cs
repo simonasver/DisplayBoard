@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime;
 using System.Text;
 using Backend.Data;
 using Backend.Data.Entities.Auth;
@@ -11,6 +12,11 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json ", optional: true)
+    .AddEnvironmentVariables();
 
 var frontEndOrigins = "_frontEndOrigins";
 
