@@ -24,9 +24,8 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy(frontEndOrigins, policy =>
         {
-            //policy.WithOrigins(builder.Configuration["FrontendAddress"]).AllowCredentials().AllowAnyHeader()
-                //.AllowAnyMethod();
-                policy.AllowAnyOrigin().AllowCredentials().AllowAnyHeader().AllowAnyMethod();
+            policy.WithOrigins(builder.Configuration["FrontendAddress"]).AllowCredentials().AllowAnyHeader()
+                .AllowAnyMethod();
         });
     });
 

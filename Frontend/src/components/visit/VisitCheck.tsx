@@ -17,10 +17,8 @@ const VisitCheck = () => {
 
   const onCheckSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("a");
     getVisitByCode(code)
       .then((res) => {
-        console.log("b");
         setSuccessMessage(
           `Visit with code ${res.code} start time is ${new Date(
             res.startDate
