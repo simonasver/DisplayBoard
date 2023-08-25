@@ -10,7 +10,7 @@ export const injectStore = (storeToInject: Store<RootState>) => {
   store = storeToInject;
 };
 
-const apiUrl = "https://localhost:7065/api";
+const apiUrl = import.meta.env.VITE_API_URL + "/api";
 
 const instance = axios.create({
   baseURL: apiUrl,

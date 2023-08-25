@@ -1,22 +1,4 @@
 services:
-  frontend:
-    build:
-      context: ./Frontend
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-
-  backend:
-    build:
-      context: ./Backend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - my-network
-    depends_on:
-      - database
-
   database:
     image: mysql:8
     environment:
@@ -28,6 +10,39 @@ services:
       - "3306:3306"
     networks:
       - my-network
+
+  backend:
+    environment:
+      - ConnectionStrings:DefaultConnection=Server=database;Database=displayboard;User=root;Password=asdasd;
+      - FrontendAddress=http://localhost:3000
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 10
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - my-network
+    depends_on:
+      - database
+
+  frontend:
+    env_file:
+      - ./Frontend/.env
+    build:
+      args:
+        - VITE_API_URL=http://localhost:8080
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - my-network
+    depends_on:
+      - backend
 
 networks:
   my-network:
